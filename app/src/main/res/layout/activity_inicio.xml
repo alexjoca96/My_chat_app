@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/purple_200"
+    android:orientation="vertical"
+    tools:context=".InicioActivity">
+
+    <TextView
+        android:id="@+id/titulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="144dp"
+        android:layout_marginEnd="144dp"
+        android:text="MyChat"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="#fff"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/acceder"
+        android:text="Acceder"
+        android:layout_marginTop="100dp"
+        android:background="@color/purple_700"
+        android:textColor="#fff"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/registrar"
+        android:text="Registrarse"
+        android:layout_below="@+id/acceder"
+        android:background="@color/purple_700"
+        android:textColor="#fff"
+        android:layout_marginTop="10dp"/>
+
+</RelativeLayout>
