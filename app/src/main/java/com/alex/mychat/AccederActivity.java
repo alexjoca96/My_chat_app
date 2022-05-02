@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,6 +24,7 @@ public class AccederActivity extends AppCompatActivity {
     Button btn_acceder;
 
     FirebaseAuth auth;
+    TextView olvido;
     DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,14 @@ public class AccederActivity extends AppCompatActivity {
         email= findViewById(R.id.email);
         clave = findViewById(R.id.clave);
         btn_acceder= findViewById(R.id.btn_acceder);
+        olvido= findViewById(R.id.olvido_contrasena);
+        olvido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity( new Intent(AccederActivity.this, RestablecerContrasenaActivity.class ));
+            }
+        });
+
         auth= FirebaseAuth.getInstance();
 
         btn_acceder.setOnClickListener(new View.OnClickListener() {

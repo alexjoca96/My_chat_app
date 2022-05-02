@@ -56,6 +56,7 @@ public class FragmentoChats extends Fragment {
                 userList.clear();
                 for (DataSnapshot snapshot1 : snapshot.getChildren()){
                     Chat chat = snapshot1.getValue(Chat.class);
+                    assert chat != null;
                     if(chat.getEmisor().equals(firebaseUser.getUid())){
                         userList.add(chat.getReceptor());
                     }
@@ -85,20 +86,21 @@ public class FragmentoChats extends Fragment {
                     Usuario user = snapshot1.getValue(Usuario.class);
 
                     for (String id : userList){
+                        assert user != null;
                         if (user.getId().equals(id)){
                             if (nUsuarios.size() != 0){
-                                for (Usuario user1: nUsuarios){
-                                    if (!user.getId().equals(user1.getId())){
+
+                                    if (!nUsuarios.contains(user)){
                                         nUsuarios.add(user);
                                     }
-                                }
+
                             }else{
                                 nUsuarios.add(user);
                             }
                         }
                     }
                 }
-                usuarioAdapter= new UsuarioAdapter(getContext(),nUsuarios);
+                usuarioAdapter= new UsuarioAdapter(getContext(),nUsuarios, true);
                 recyclerView.setAdapter(usuarioAdapter);
 
             }

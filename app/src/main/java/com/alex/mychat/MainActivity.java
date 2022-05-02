@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.alex.mychat.Adapters.AdapterViewPager;
 import com.alex.mychat.Fragmentos.FragmentoChats;
 import com.alex.mychat.Fragmentos.FragmentoUsuarios;
+import com.alex.mychat.Fragmentos.PerfilFragment;
 import com.alex.mychat.Modelo.Usuario;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
@@ -28,6 +29,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         AdapterViewPager adapterViewPager= new AdapterViewPager(getSupportFragmentManager(),getLifecycle());
         adapterViewPager.addFragmento(new FragmentoChats(),"Chats");
         adapterViewPager.addFragmento(new FragmentoUsuarios(),"Usuarios");
+        adapterViewPager.addFragmento(new PerfilFragment(),"Perfil");
         viewPager2.setAdapter(adapterViewPager);
         new TabLayoutMediator(tabLayout, viewPager2, (tab, position) ->  {
             titulos= adapterViewPager.getTitulos();
@@ -99,11 +102,28 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.logout:
                 FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,InicioActivity.class));
-                finish();
+                startActivity(new Intent(MainActivity.this,InicioActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 return true;
         }
         return false;
     }
 
+    private void estado(String estado){
+        reference= FirebaseDatabase.getInstance().getReference("Usuarios").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap= new HashMap<>();
+        hashMap.put("estado",estado);
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        estado("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        estado("offline");
+    }
 }

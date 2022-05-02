@@ -47,6 +47,7 @@ public class MensajeActivity extends AppCompatActivity {
     RecyclerView recyclerView;
 
     Intent intent;
+    ValueEventListener vistoEventListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,7 +60,7 @@ public class MensajeActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(new Intent(MensajeActivity.this,MainActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             }
         });
 
@@ -109,6 +110,31 @@ public class MensajeActivity extends AppCompatActivity {
 
             }
         });
+
+        mensajeVisto(userid);
+    }
+
+    private void mensajeVisto(final String userid){
+        reference= FirebaseDatabase.getInstance().getReference("Chats");
+        vistoEventListener = reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                    Chat chat = snapshot1.getValue(Chat.class);
+                    if (chat.getReceptor().equals(firebaseUser.getUid()) && chat.getEmisor().equals(userid)){
+                        HashMap<String, Object> hashMap= new HashMap<>();
+                        hashMap.put("visto",true);
+                        snapshot1.getRef().updateChildren(hashMap);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public void enviarMensaje(String emisor, String receptor, String mensaje){
@@ -118,6 +144,7 @@ public class MensajeActivity extends AppCompatActivity {
         hashMap.put("emisor",emisor);
         hashMap.put("receptor",receptor);
         hashMap.put("mensaje",mensaje);
+        hashMap.put("visto",false);
         reference.child("Chats").push().setValue(hashMap);
 
     }
@@ -146,5 +173,25 @@ public class MensajeActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void estado(String estado){
+        reference= FirebaseDatabase.getInstance().getReference("Usuarios").child(firebaseUser.getUid());
+        HashMap<String, Object> hashMap= new HashMap<>();
+        hashMap.put("estado",estado);
+        reference.updateChildren(hashMap);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        estado("online");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        reference.removeEventListener(vistoEventListener);
+        estado("offline");
     }
 }

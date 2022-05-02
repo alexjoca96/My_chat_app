@@ -10,11 +10,13 @@
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_mensaje.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_registrar.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_restablecer_contrasena.xml" value="0.264" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/bar_layout.xml" value="0.25052083333333336" />
-        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/chat_derecho.xml" value="1.1957236842105263" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/chat_derecho.xml" value="0.15498938428874734" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/chat_izquierdo.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/fragment_fragmento_chats.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/fragment_fragmento_usuarios.xml" value="0.25052083333333336" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/fragment_perfil.xml" value="0.25052083333333336" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/usuario_item.xml" value="0.18867924528301888" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/menu/menu.xml" value="0.11041666666666666" />
       </map>
