@@ -10,11 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.alex.mychat.Adapters.UsuarioAdapter;
 import com.alex.mychat.Modelo.Chat;
 import com.alex.mychat.Modelo.Usuario;
+import com.alex.mychat.Notificaciones.Token;
 import com.alex.mychat.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -22,6 +26,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,7 +79,25 @@ public class FragmentoChats extends Fragment {
 
             }
         });
+
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Toast.makeText(getContext(), "Algo fallo", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String token = task.getResult();
+                ActualizarTokens(FirebaseMessaging.getInstance().getToken().toString());
+            }
+        });
+
         return view;
+    }
+    private void ActualizarTokens(String reftoken) {
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
+        Token token = new Token(reftoken);
+        reference.child(firebaseUser.getUid()).setValue(token);
     }
 
     private void leerChats() {
