@@ -5,12 +5,14 @@ public class Usuario {
     private String usuario;
     private String imagenURL;
     private String estado;
+    private String token;
 
-    public Usuario(String id, String usuario, String imagenURL ,String estado) {
+    public Usuario(String id, String usuario, String imagenURL ,String estado, String token) {
         this.id = id;
         this.usuario = usuario;
         this.imagenURL = imagenURL;
         this.estado = estado;
+        this.token= token;
     }
 
     public Usuario() {
@@ -46,5 +48,13 @@ public class Usuario {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

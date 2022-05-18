@@ -16,6 +16,7 @@ import com.alex.mychat.Adapters.AdapterViewPager;
 import com.alex.mychat.Fragmentos.FragmentoChats;
 import com.alex.mychat.Fragmentos.FragmentoUsuarios;
 import com.alex.mychat.Fragmentos.PerfilFragment;
+import com.alex.mychat.Modelo.Chat;
 import com.alex.mychat.Modelo.Usuario;
 import com.bumptech.glide.Glide;
 import com.google.android.material.tabs.TabLayout;
@@ -78,15 +79,40 @@ public class MainActivity extends AppCompatActivity {
 
         TabLayout tabLayout =findViewById(R.id.tab_layout);
         ViewPager2 viewPager2 = findViewById(R.id.view_pager);
-        AdapterViewPager adapterViewPager= new AdapterViewPager(getSupportFragmentManager(),getLifecycle());
-        adapterViewPager.addFragmento(new FragmentoChats(),"Chats");
-        adapterViewPager.addFragmento(new FragmentoUsuarios(),"Usuarios");
-        adapterViewPager.addFragmento(new PerfilFragment(),"Perfil");
-        viewPager2.setAdapter(adapterViewPager);
-        new TabLayoutMediator(tabLayout, viewPager2, (tab, position) ->  {
-            titulos= adapterViewPager.getTitulos();
-           tab.setText(titulos.get(position));
-        }).attach();
+        reference = FirebaseDatabase.getInstance().getReference("Chats");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                AdapterViewPager adapterViewPager= new AdapterViewPager(getSupportFragmentManager(),getLifecycle());
+                int sinLeer= 0;
+                for (DataSnapshot snapshot1: snapshot.getChildren()){
+                    Chat chat= snapshot1.getValue(Chat.class);
+                    if (chat.getReceptor().equals(firebaseUser.getUid()) && !chat.isVisto()){
+                        sinLeer++;
+                    }
+                }
+                if (sinLeer ==0){
+                    adapterViewPager.addFragmento(new FragmentoChats(),"Chats");
+                }else{
+                    adapterViewPager.addFragmento(new FragmentoChats(),"Chats ("+sinLeer+")");
+                }
+                adapterViewPager.addFragmento(new FragmentoUsuarios(),"Usuarios");
+                adapterViewPager.addFragmento(new PerfilFragment(),"Perfil");
+                viewPager2.setAdapter(adapterViewPager);
+                new TabLayoutMediator(tabLayout, viewPager2, (tab, position) ->  {
+                    titulos= adapterViewPager.getTitulos();
+                    tab.setText(titulos.get(position));
+                }).attach();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
     }
 

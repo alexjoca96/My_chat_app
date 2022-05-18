@@ -1,4 +1,4 @@
-package com.alex.mychat.Fragmentos;
+package com.alex.mychat.Notificaciones;
 
 import com.alex.mychat.Notificaciones.Emisor;
 import com.alex.mychat.Notificaciones.MiRespuesta;
@@ -19,5 +19,5 @@ public interface APIService {
     )
 
     @POST("fcm/send")
-    Call<MiRespuesta> enviarNotificacion(@Body Emisor cuerpo);
+    Call<MiRespuesta> enviarNotificacion(@Body Emisor body);
 }

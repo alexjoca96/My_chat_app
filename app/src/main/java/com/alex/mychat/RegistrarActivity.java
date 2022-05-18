@@ -79,6 +79,7 @@ public class RegistrarActivity extends AppCompatActivity {
                             hashMap.put("usuario", usuario_n);
                             hashMap.put("imagenURL","default");
                             hashMap.put("estado","offline");
+                            hashMap.put("token","default");
 
                             reference.setValue(hashMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override

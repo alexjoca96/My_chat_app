@@ -18,6 +18,7 @@ import com.alex.mychat.Modelo.Usuario;
 import com.alex.mychat.Notificaciones.Token;
 import com.alex.mychat.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,11 +28,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceIdReceiver;
+import com.google.firebase.iid.internal.FirebaseInstanceIdInternal;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FragmentoChats extends Fragment {
@@ -80,26 +84,30 @@ public class FragmentoChats extends Fragment {
             }
         });
 
-        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-            @Override
-            public void onComplete(@NonNull Task<String> task) {
-                if (!task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Algo fallo", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String token = task.getResult();
-                ActualizarTokens(FirebaseMessaging.getInstance().getToken().toString());
-            }
-        });
+       FirebaseMessaging.getInstance().getToken().addOnSuccessListener(new OnSuccessListener<String>() {
+           @Override
+           public void onSuccess(String s) {
+               ActualizarTokensUsuario(s);
+           }
+       });
+
 
         return view;
     }
-    private void ActualizarTokens(String reftoken) {
+  /*  private void ActualizarTokens(String reftoken) {
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
         Token token = new Token(reftoken);
         reference.child(firebaseUser.getUid()).setValue(token);
-    }
+        ActualizarTokensUsuario(reftoken);
+    }*/
 
+    private void ActualizarTokensUsuario(String token) {
+
+        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Usuarios").child(firebaseUser.getUid());
+        Map<String,Object> map= new HashMap<>();
+        map.put("token", token);
+        reference.updateChildren(map);
+    }
     private void leerChats() {
         nUsuarios= new ArrayList<>();
         reference = FirebaseDatabase.getInstance().getReference("Usuarios");

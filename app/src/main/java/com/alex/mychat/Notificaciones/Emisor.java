@@ -1,11 +1,11 @@
 package com.alex.mychat.Notificaciones;
 
 public class Emisor {
-    public Datos datos;
-    public String para;
+    public Data data;
+    public String to;
 
-    public Emisor(Datos datos, String para) {
-        this.datos = datos;
-        this.para = para;
+    public Emisor(Data data, String to) {
+        this.data = data;
+        this.to = to;
     }
 }

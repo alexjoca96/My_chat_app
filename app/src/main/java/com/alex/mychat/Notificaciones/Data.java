@@ -1,21 +1,21 @@
 package com.alex.mychat.Notificaciones;
 
-public class Datos {
+public class Data {
     private String usuario;
     private int icono;
     private String cuerpo;
-    private String titilo;
-    private String enviado;
+    private String titulo;
 
-    public Datos(String usuario, int icono, String cuerpo, String titilo, String enviado) {
+
+    public Data(String usuario, int icono, String cuerpo, String titulo) {
         this.usuario = usuario;
         this.icono = icono;
         this.cuerpo = cuerpo;
-        this.titilo = titilo;
-        this.enviado = enviado;
+        this.titulo = titulo;
+
     }
 
-    public Datos() {
+    public Data() {
     }
 
     public String getUsuario() {
@@ -42,19 +42,12 @@ public class Datos {
         this.cuerpo = cuerpo;
     }
 
-    public String getTitilo() {
-        return titilo;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public void setTitilo(String titilo) {
-        this.titilo = titilo;
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
-    public String getEnviado() {
-        return enviado;
-    }
-
-    public void setEnviado(String enviado) {
-        this.enviado = enviado;
-    }
 }
