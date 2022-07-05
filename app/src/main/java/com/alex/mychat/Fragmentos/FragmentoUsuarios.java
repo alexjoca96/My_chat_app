@@ -60,7 +60,7 @@ public class FragmentoUsuarios extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    buscarUsuarios(s.toString());
+                    buscarUsuarios(s.toString().toLowerCase());
             }
 
             @Override
@@ -77,23 +77,19 @@ public class FragmentoUsuarios extends Fragment {
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         Query query= FirebaseDatabase.getInstance().getReference("Usuarios").orderByChild("usuario").startAt(s).endAt(s+"\uf8ff");
-
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 nUsuarios.clear();
                 for (DataSnapshot snapshot1: snapshot.getChildren()){
                     Usuario user = snapshot1.getValue(Usuario.class);
-
                     if (!user.getId().equals(firebaseUser.getUid())){
                         nUsuarios.add(user);
                     }
                 }
-
                 usuarioAdapter= new UsuarioAdapter(getContext(),nUsuarios,false);
                 recyclerView.setAdapter(usuarioAdapter);
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

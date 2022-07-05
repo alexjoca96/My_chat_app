@@ -39,11 +39,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void ActualizarTokens(String token) {
-        /*FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Usuarios").child(firebaseUser.getUid());
-        Map<String,Object> map= new HashMap<>();
-        map.put("token", token);
-        reference.updateChildren(map);*/
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Tokens");
         Token tokn= new Token(token);
@@ -60,12 +55,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage message) {
         super.onMessageReceived(message);
         FirebaseUser firebaseUser= FirebaseAuth.getInstance().getCurrentUser();
-
-           if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                enviarNotificacionOreo(message);
            else
             enviarNotificacion(message);
-
     }
 
     private void enviarNotificacionOreo(RemoteMessage message) {
@@ -73,9 +66,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String icono = message.getData().get("icono");
         String cuerpo = message.getData().get("cuerpo");
         String titulo = message.getData().get("titulo");
-
-
-
         RemoteMessage.Notification notification = message.getNotification();
         int j = Integer.parseInt(usuario.replaceAll("[\\D]", ""));
         Intent intent= new Intent(this, MensajeActivity.class);

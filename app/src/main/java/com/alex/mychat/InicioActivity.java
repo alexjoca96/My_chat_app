@@ -34,12 +34,14 @@ public class InicioActivity extends AppCompatActivity {
 
         acceder= findViewById(R.id.acceder);
         registrar=findViewById(R.id.registrar);
+        //para acceder a la actividad de inicio de sesion
         acceder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InicioActivity.this, AccederActivity.class));
             }
         });
+        //para acceder a la actividad de registro de un nuevo usuariow
         registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

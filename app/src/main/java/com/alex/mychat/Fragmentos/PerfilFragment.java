@@ -66,7 +66,6 @@ public class PerfilFragment extends Fragment {
         storageReference = FirebaseStorage.getInstance().getReference("uploads");
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Usuarios").child(firebaseUser.getUid());
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -94,20 +93,15 @@ public class PerfilFragment extends Fragment {
                 new ActivityResultCallback<Uri>() {
                     @Override
                     public void onActivityResult(Uri result) {
-                        // profile_image.setImageURI(result);
                         imagenUri= result;
-
                         if (uploadTask!= null && uploadTask.isInProgress()){
                             Toast.makeText(getContext(),"Upload en progreso",Toast.LENGTH_LONG).show();
-
                         }else {
                             uploadImage();
                         }
                     }
                 }
         );
-
-
         perfil_imagen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +117,6 @@ public class PerfilFragment extends Fragment {
         final ProgressDialog pd= new ProgressDialog(getContext());
         pd.setMessage("Subiendo");
         pd.show();
-
         if (imagenUri != null){
             final StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(imagenUri));
             uploadTask= fileReference.putFile(imagenUri);

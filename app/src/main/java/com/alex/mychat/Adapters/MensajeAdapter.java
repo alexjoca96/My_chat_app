@@ -49,7 +49,17 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull MensajeAdapter.ViewHolder holder, int position) {
         Chat chat = mChat.get(position);
-        holder.mostrar_mensaje.setText(chat.getMensaje());
+
+        if(chat.getType().equals("image")){
+            holder.imagen.setVisibility(View.VISIBLE);
+            //holder.show_message.setVisibility(View.GONE);
+            holder.mostrar_mensaje.setText("");
+            Glide.with(mContext).load(chat.getMensaje()).into(holder.imagen);
+        }else{
+            holder.mostrar_mensaje.setVisibility(View.VISIBLE);
+            holder.imagen.setVisibility(View.GONE);
+            holder.mostrar_mensaje.setText(chat.getMensaje());
+        }
         if (imageurl.equals("default")){
             holder.perfil_imagen.setImageResource(R.mipmap.ic_launcher);
         }else {
@@ -66,7 +76,6 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHold
             holder.visto.setVisibility(View.GONE);
         }
     }
-
     @Override
     public int getItemCount() {
         return mChat.size();
@@ -77,12 +86,14 @@ public class MensajeAdapter extends RecyclerView.Adapter<MensajeAdapter.ViewHold
         public TextView mostrar_mensaje;
         public ImageView perfil_imagen;
         public TextView visto;
+        public ImageView imagen;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             mostrar_mensaje =itemView.findViewById(R.id.mostrar_mensaje);
             perfil_imagen = itemView.findViewById(R.id.perfil_imagen);
             visto= itemView.findViewById(R.id.visto);
+            imagen= itemView.findViewById(R.id.imagen);
         }
     }
 

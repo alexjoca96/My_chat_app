@@ -3,8 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable-anydpi/ic_camara.xml" value="0.2025" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable-anydpi/ic_galeria.xml" value="0.223" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2025" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable/fondo_adjuntar.xml" value="0.223" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable/fondo_derecho.xml" value="0.1" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable/fondo_izquierdo.xml" value="0.1" />
+        <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2025" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_acceder.xml" value="0.1925925925925926" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_inicio.xml" value="0.12183383991894631" />
         <entry key="..\:/Users/alexa/AndroidStudioProjects/MyChat/app/src/main/res/layout/activity_main.xml" value="0.1" />

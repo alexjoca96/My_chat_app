@@ -30,13 +30,13 @@ public class UsuarioAdapter extends RecyclerView.Adapter <UsuarioAdapter.MyViewH
     @NonNull
     private Context context;
     private List<Usuario> nUsuarios;
-    private boolean en_linea;
+    private boolean es_chat;
     String ultimoMensaje;
 
-    public UsuarioAdapter(Context context, List<Usuario> nUsuarios, boolean en_linea) {
+    public UsuarioAdapter(Context context, List<Usuario> nUsuarios, boolean es_chat) {
         this.context = context;
         this.nUsuarios = nUsuarios;
-        this.en_linea= en_linea;
+        this.es_chat= es_chat;
     }
     public UsuarioAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.usuario_item,parent ,false);
@@ -52,13 +52,12 @@ public class UsuarioAdapter extends RecyclerView.Adapter <UsuarioAdapter.MyViewH
         }else {
             Glide.with(context).load(user.getImagenURL()).into(holder.perfil_imagen);
         }
-        if(en_linea){
+        if(es_chat){
             ultimoMensaje(user.getId(), holder.ultimo_msg);
         }else {
             holder.ultimo_msg.setVisibility(View.GONE);
         }
-
-        if (en_linea){
+        if (es_chat){
             if (user.getEstado().equals("online")){
                 holder.img_on.setVisibility(View.VISIBLE);
                 holder.img_off.setVisibility(View.GONE);
@@ -76,8 +75,6 @@ public class UsuarioAdapter extends RecyclerView.Adapter <UsuarioAdapter.MyViewH
                 Intent intent= new Intent(context, MensajeActivity.class);
                 intent.putExtra("userid",user.getId());
                 context.startActivity(intent);
-
-
             }
         });
     }
@@ -108,7 +105,6 @@ public class UsuarioAdapter extends RecyclerView.Adapter <UsuarioAdapter.MyViewH
         ultimoMensaje ="default";
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Chats");
-
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -116,10 +112,11 @@ public class UsuarioAdapter extends RecyclerView.Adapter <UsuarioAdapter.MyViewH
                     Chat chat = snapshot1.getValue(Chat.class);
                     if (chat.getReceptor().equals(firebaseUser.getUid()) && chat.getEmisor().equals(userid) ||
                         chat.getReceptor().equals(userid) && chat.getEmisor().equals(firebaseUser.getUid())){
-                           ultimoMensaje = chat.getMensaje();
-                    }
+                           if(chat.getType().equals("text"))
+                            ultimoMensaje = chat.getMensaje();
+                           else
+                               ultimoMensaje = "Foto"; }
                 }
-
                 switch (ultimoMensaje){
                     case "dafault":
                         ultimo_msg.setText("Sin Mensajes");

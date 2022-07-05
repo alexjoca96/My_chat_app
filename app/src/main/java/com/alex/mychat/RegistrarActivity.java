@@ -47,7 +47,7 @@ public class RegistrarActivity extends AppCompatActivity {
         btn_registrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txt_usuario = usuario.getText().toString();
+                String txt_usuario = usuario.getText().toString().toLowerCase();
                 String txt_email = email.getText().toString();
                 String txt_clave = clave.getText().toString();
 
